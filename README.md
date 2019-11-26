@@ -4,7 +4,7 @@
 
 ### Run 
 
-`docker run -it --rm -p 5201:5201 networkstatic/iperf3 --help`
+`docker run -it --rm -p 5201:5201 jackhhh/iperf3 iperf3 --help`
 
 ### Usage
 
@@ -15,7 +15,7 @@ To test bandwidth between two containers, start a server (listener) and point a 
 Start a listener service on port 5201 and name the container "iperf3-server":
 
 ```
-docker run  -it --rm --name=iperf3-server -p 5201:5201 networkstatic/iperf3 -s
+docker run  -it --rm --name=iperf3-server -p 5201:5201 jackhhh/iperf3 iperf3 -s
 ```
 
 That returns an iperf3 process bound to a socket waiting for new connections:
@@ -42,7 +42,7 @@ Run a client container pointing at the server service IP address.
 *Note* if you are new to Docker, the  `--rm` flag will destroy the container after the test runs. I also left out explicitly naming the container on the client side since I don't need its IP address. I typically explicitly name containers for organization and to maintain a consistent pattern.
 
 ```
-docker run  -it --rm networkstatic/iperf3 -c 172.17.0.163
+docker run  -it --rm jackhhh/iperf3 iperf3 -c 172.17.0.163
 ```
 
 And the output is the following:
@@ -72,7 +72,7 @@ iperf Done.
 Or you can do something fancier in a one liner like so (docker ps -ql returns the CID e.g. container ID of the last container started which would be the server we want in this case)
 
 ```
-docker run  -it --rm networkstatic/iperf3 -c $(docker inspect --format "{{ .NetworkSettings.IPAddress }}" $(docker ps -ql))
+docker run  -it --rm jackhhh/iperf3 iperf3 -c $(docker inspect --format "{{ .NetworkSettings.IPAddress }}" $(docker ps -ql))
 Connecting to host 172.17.0.193, port 5201
 [  4] local 172.17.0.194 port 60922 connected to 172.17.0.193 port 5201
 [ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
@@ -93,5 +93,7 @@ Connecting to host 172.17.0.193, port 5201
 
 iperf Done.
 ```
+
+For consistently running, start with ```python /client.py $server_ip```
 
 Thanks to ESNET for re-rolling iperf from the ground up. It is a killer piece of software.
