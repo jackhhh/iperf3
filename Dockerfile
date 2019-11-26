@@ -15,7 +15,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # copy specified start-shell to /
-COPY run.py /
+COPY client.py /
 
 # Expose the default iperf3 server port
 EXPOSE 5201
