@@ -25,8 +25,8 @@ if __name__ == '__main__':
     while True:
         ret_run = subprocess.Popen(cmd_run + server_ip, shell=True, stdout=subprocess.PIPE, close_fds=True).communicate()
 
-        line_bandwidth_send = ret_run[0].split('\r\n')[-5].split()
-        line_bandwidth_recv = ret_run[0].split('\r\n')[-4].split()
+        line_bandwidth_send = ret_run[0].split('\n')[-5].split()
+        line_bandwidth_recv = ret_run[0].split('\n')[-4].split()
         bandwidth_send = int(line_bandwidth_send[line_bandwidth_send.index('Mbits/sec') - 1])
         bandwidth_recv = int(line_bandwidth_recv[line_bandwidth_recv.index('Mbits/sec') - 1])
         
